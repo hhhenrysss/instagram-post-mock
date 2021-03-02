@@ -13,6 +13,7 @@ function App() {
             <div style={{display: 'flex'}}>
                 <PostPicture/>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <Profile/>
 
                 </div>
             </div>
