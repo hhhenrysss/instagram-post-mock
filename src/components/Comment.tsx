@@ -2,7 +2,7 @@ import React from 'react';
 import {printTime} from './util';
 import {IComment} from '../types/Comment';
 
-function CommentPicture({url, author}: {url: string, author: string}) {
+function CommentPicture({url, author}: { url: string, author: string }) {
     return (
         <img
             style={{width: 32, height: 32, borderRadius: 1000, gridRow: 1, gridColumn: 1}}
@@ -12,7 +12,7 @@ function CommentPicture({url, author}: {url: string, author: string}) {
     )
 }
 
-function CommentContent({content, author, isFullWidth}: {content: string, author: string, isFullWidth: boolean}) {
+function CommentContent({content, author, isFullWidth}: { content: string, author: string, isFullWidth: boolean }) {
     // todo: add a transparent options button
     return (
         <p style={{gridRow: 1, gridColumn: isFullWidth ? '2/3' : 2, fontSize: '13px', margin: 0}}>
@@ -39,7 +39,7 @@ function CommentLikeButton({isLiked, onLikeClicked}: ICommentLikeButtonProps) {
     )
 }
 
-function CommentFunctionBar({likeCount, time, isTimeOnly}: {likeCount: number, time: number, isTimeOnly: boolean}) {
+function CommentFunctionBar({likeCount, time, isTimeOnly}: { likeCount: number, time: number, isTimeOnly: boolean }) {
     if (isTimeOnly) {
         return (
             <div style={{fontSize: '12px', color: 'gray'}}>
@@ -69,14 +69,21 @@ export function Comment(props: ICommentProps) {
     const {comment, isLiked, onLikeClicked, isCurrentUserPost} = props;
     return (
         <div
-            style={{display: 'grid', gridTemplateColumns: `35px 1fr 30px`, gridTemplateRows: `1fr 20px`, gridColumnGap: 5, gridRowGap: 5}}
+            style={{
+                display: 'grid',
+                gridTemplateColumns: `35px 1fr 30px`,
+                gridTemplateRows: `1fr 20px`,
+                gridColumnGap: 5,
+                gridRowGap: 5
+            }}
         >
             <CommentPicture url={comment.user.pictureURL} author={comment.user.username}/>
             <CommentContent isFullWidth={isCurrentUserPost} content={comment.content} author={comment.user.username}/>
             {isCurrentUserPost && (
                 <CommentLikeButton isLiked={isLiked} onLikeClicked={onLikeClicked}/>
             )}
-            <CommentFunctionBar isTimeOnly={isCurrentUserPost} likeCount={comment.likeCount} time={comment.timeSincePosted}/>
+            <CommentFunctionBar isTimeOnly={isCurrentUserPost} likeCount={comment.likeCount}
+                                time={comment.timeSincePosted}/>
         </div>
     )
 }

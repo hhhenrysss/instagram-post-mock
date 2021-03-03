@@ -1,11 +1,14 @@
 export function printTime(seconds: number, isFullTime: boolean = false) {
     let result = Math.floor(seconds / (365 * 24 * 3600));
+
     function makePlural(content: string) {
         return content + (result > 1 ? 's' : '');
     }
+
     function toString(fullNotation: string, abbreviation: string) {
         return result + (isFullTime ? ' ' + makePlural(fullNotation) : abbreviation);
     }
+
     if (result > 0) {
         return toString('year', 'y');
     }

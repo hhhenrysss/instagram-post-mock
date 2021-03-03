@@ -10,7 +10,8 @@ export class DataSource {
     constructor(
         private post = currentPost,
         private comments = currentComments
-    ) {}
+    ) {
+    }
 
     async getCurrentPost() {
         await sleep(30);
@@ -25,7 +26,7 @@ export class DataSource {
         if (page * pageSize >= this.comments.length) {
             throw new Error('request out of range');
         }
-        return this.comments.slice(page*pageSize, (page+1)*pageSize);
+        return this.comments.slice(page * pageSize, (page + 1) * pageSize);
     }
 
     async getTotalCommentsLength() {
