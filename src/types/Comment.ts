@@ -5,7 +5,7 @@ export interface IComment {
     content: string,
     timeSincePosted: number,
     likes: Set<string>,
-    replies: Map<string, IComment>; // only one level of nesting
+    replies: IComment[]; // only one level of nesting
     user: IProfile
 }
 

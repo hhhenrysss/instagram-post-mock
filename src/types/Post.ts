@@ -5,7 +5,7 @@ export interface IPost {
     postID: string,
     location: string,
     user: IProfile,
-    comments: Map<string, IComment>,
+    comments: IComment[],
     totalCommentsSize: number,
     postContent: string,
 }

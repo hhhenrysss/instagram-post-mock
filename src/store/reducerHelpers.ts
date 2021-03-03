@@ -1,25 +1,31 @@
 import {IState} from '../types/State';
 import {IComment} from '../types/Comment';
+import {IPost} from '../types/Post';
 
 function createState(state: IState): IState {
     return {
         post: {
             ...state.post!,
-            comments: new Map<string, IComment>()
+            comments: []
         }
     };
 }
 
-function updateMapConditionally<T>(map: Map<string, T>, targetID: string, onFound: (old: T) => T): Map<string, T> {
-    const newMap = new Map<string, T>();
-    for (const [id, val] of map) {
-        if (id === targetID) {
-            newMap.set(id, onFound(val));
+function updateArrayConditionally<T>(
+    old: T[],
+    getID: (val: T) => string,
+    targetID: string,
+    onFound: (old: T) => T
+): T[] {
+    const newArray = [];
+    for (const val of old) {
+        if (getID(val) === targetID) {
+            newArray.push(onFound(val));
         } else {
-            newMap.set(id, val);
+            newArray.push(val);
         }
     }
-    return newMap;
+    return newArray;
 }
 
 export function toggleCommentLike(state: IState, commentID: string, username: string) {
@@ -27,8 +33,9 @@ export function toggleCommentLike(state: IState, commentID: string, username: st
         return state;
     }
     const newState = createState(state);
-    newState.post!.comments = updateMapConditionally(
+    newState.post!.comments = updateArrayConditionally(
         newState.post!.comments,
+        val => val.id,
         commentID,
         old => {
             const newComment = {...old};
@@ -51,12 +58,14 @@ export function toggleReplyLike(state: IState, targetCommentID: string, targetRe
         return state;
     }
     const newState = createState(state);
-    newState.post!.comments = updateMapConditionally(
+    newState.post!.comments = updateArrayConditionally(
         newState.post!.comments,
+        val => val.id,
         targetCommentID,
         old => {
-            const newReplies = updateMapConditionally(
+            const newReplies = updateArrayConditionally(
                 old.replies,
+                val => val.id,
                 targetReplyID,
                 oldReply => {
                     const newReply = {...oldReply};
@@ -81,13 +90,12 @@ export function addReplyToComment(state: IState, commentID: string, reply: IComm
         return state;
     }
     const newState = createState(state);
-    for (const [id, comment] of state.post.comments.entries()) {
-        if (id === commentID) {
-            const newComment: IComment = {...comment, replies: new Map<string, IComment>(comment.replies)};
-            newComment.replies.set(reply.id, reply);
-            newState.post!.comments.set(id, newComment);
+    for (const comment of state.post.comments) {
+        if (comment.id === commentID) {
+            const newComment: IComment = {...comment, replies: [...comment.replies, reply]};
+            newState.post!.comments.push(newComment);
         } else {
-            newState.post!.comments.set(id, comment);
+            newState.post!.comments.push(comment);
         }
     }
     return newState;
@@ -98,10 +106,15 @@ export function addCommentToPost(state: IState, comment: IComment | IComment[]):
         return state;
     }
     const newState = createState(state);
-    const newComments = new Map<string, IComment>(state.post.comments);
-    newComments.set(comment.id, comment);
+    const newComments = [...state.post.comments];
+    if (!Array.isArray(comment)) {
+        comment = [comment];
+    }
+    newComments.push(...comment);
     newState.post!.comments = newComments;
     return newState;
 }
 
-export function add
+export function fetchPost(post: IPost): IState {
+    return {post};
+}

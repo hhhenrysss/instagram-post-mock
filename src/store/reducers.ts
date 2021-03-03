@@ -1,13 +1,13 @@
 import {IState} from '../types/State';
 import {
     Action,
-    ActionTypes,
+    ActionTypes, FetchCommentsAction, FetchPostAction,
     LikeCommentAction,
     LikeReplyAction,
     ReplyCommentAction,
     ReplyPostAction
 } from './actionTypes';
-import {addCommentToPost, addReplyToComment, toggleCommentLike, toggleReplyLike} from './reducerHelpers';
+import {addCommentToPost, addReplyToComment, fetchPost, toggleCommentLike, toggleReplyLike} from './reducerHelpers';
 
 const initialState: IState = {
     post: undefined
@@ -32,10 +32,14 @@ export function commentReducers(state = initialState, action: Action) {
             return addCommentToPost(state, payload.comment);
         }
         case ActionTypes.FETCH_COMMENTS: {
-            break;
+            const payload = (action as FetchCommentsAction).payload;
+            return addCommentToPost(state, payload.comments);
         }
         case ActionTypes.FETCH_POST: {
-            break;
+            const payload = (action as FetchPostAction).payload;
+            return fetchPost(payload.post);
         }
+        default:
+            return state;
     }
 }
