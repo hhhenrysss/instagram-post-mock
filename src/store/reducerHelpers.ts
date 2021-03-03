@@ -1,6 +1,7 @@
 import {IState} from '../types/State';
 import {IComment} from '../types/Comment';
 import {IPost} from '../types/Post';
+import {IProfile} from '../types/Profile';
 
 function createState(state: IState): IState {
     return {
@@ -115,6 +116,10 @@ export function addCommentToPost(state: IState, comment: IComment | IComment[]):
     return newState;
 }
 
-export function fetchPost(post: IPost): IState {
-    return {post};
+export function setPost(state: IState, post: IPost): IState {
+    return {...state, post};
+}
+
+export function setUser(state: IState, user: IProfile): IState {
+    return {...state, user};
 }

@@ -1,5 +1,4 @@
 import {IPost} from '../types/Post';
-import {IComment} from '../types/Comment';
 import {IProfile} from '../types/Profile';
 
 const currentComments = [];

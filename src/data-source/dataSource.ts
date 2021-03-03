@@ -1,5 +1,7 @@
 import {currentPost, currentUser} from './fakeData';
 import {IComment} from '../types/Comment';
+import {IToggleCommentLikeActionPayload} from '../store/actions/toggleCommentLike';
+import {IToggleReplyLikeActionPayload} from '../store/actions/toggleReplyLike';
 
 function sleep(seconds: number) {
     return new Promise(resolve => {
@@ -40,7 +42,7 @@ export class DataSource {
         return this.post.comments.length;
     }
 
-    async toggleCommentLike(commentID: string, username: string) {
+    async toggleCommentLike({commentID, username}: IToggleCommentLikeActionPayload) {
         for (const comment of this.post.comments) {
             if (comment.id === commentID) {
                 if (comment.likes.has(username)) {
@@ -53,7 +55,7 @@ export class DataSource {
         }
     }
 
-    async toggleReplyLike(commentID: string, replyID: string, username: string) {
+    async toggleReplyLike({commentID, replyID, username}: IToggleReplyLikeActionPayload) {
         for (const comment of this.post.comments) {
             if (comment.id === commentID) {
                 for (const reply of comment.replies) {
@@ -83,15 +85,21 @@ export class DataSource {
     }
 
     async addComment(content: string) {
-        this.post.comments.push(this.createComment(content));
+        const newComment = this.createComment(content);
+        this.post.comments.push(newComment);
+        return newComment;
     }
 
     async addReplyToComment(content: string, commentID: string) {
         for (const comment of this.post.comments) {
             if (comment.id === commentID) {
-                comment.replies.push(this.createComment(content));
-                return;
+                const newComment = this.createComment(content)
+                comment.replies.push(newComment);
+                return newComment;
             }
         }
+        return null;
     }
 }
+
+export const dataSource = new DataSource();
