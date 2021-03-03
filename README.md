@@ -1,5 +1,5 @@
 # Instagram mock
-This app is not complete and untested. The basic structures are done and each component element has been manually tested, but components need to be connected, redux needs to be tested and styles need to be re-organized.
+This app is not complete and untested. The basic structures are done and each component element has been manually tested, but components need to be connected, redux (reducers and thunks) needs to be tested, and styles need to be re-organized.
 
 ## Build
 * `npm i` and `npm run build`
@@ -14,7 +14,7 @@ This app is not complete and untested. The basic structures are done and each co
 * `src/store` contains type signatures, actions, selectors, and reducers of the global state
 * `src/types` contains general data structure types
 
-## Finished features
+## (Nearly) Finished features
 * Like comment
 * Like reply
 * Reply post
