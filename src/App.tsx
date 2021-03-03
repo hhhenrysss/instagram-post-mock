@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Profile} from './static-components/Profile';
+import {Profile} from './static-components/PostHeader';
 import {Comment} from './components/Comment';
 import {PostFunctionBar} from './static-components/PostFunctionBar';
 import {PostTime} from './static-components/PostTime';

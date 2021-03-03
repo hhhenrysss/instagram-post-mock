@@ -1,8 +1,11 @@
+import {IProfile} from './Profile';
+
 export interface IComment {
     id: string,
-    author: string,
     content: string,
     timeSincePosted: number,
-    likeCount: number,
-    replies: IComment[];
+    likes: Set<string>,
+    replies: Map<string, IComment>;
+    user: IProfile
 }
+
