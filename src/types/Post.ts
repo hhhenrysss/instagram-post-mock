@@ -1,4 +1,3 @@
-import {IProfile} from './Profile';
 import {IComment} from './Comment';
 
 export interface IPost extends IComment {
