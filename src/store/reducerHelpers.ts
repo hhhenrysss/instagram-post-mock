@@ -7,7 +7,7 @@ function createState(state: IState): IState {
     return {
         post: {
             ...state.post!,
-            comments: []
+            replies: []
         }
     };
 }
@@ -34,8 +34,8 @@ export function toggleCommentLike(state: IState, commentID: string, username: st
         return state;
     }
     const newState = createState(state);
-    newState.post!.comments = updateArrayConditionally(
-        newState.post!.comments,
+    newState.post!.replies = updateArrayConditionally(
+        newState.post!.replies,
         val => val.id,
         commentID,
         old => {
@@ -59,8 +59,8 @@ export function toggleReplyLike(state: IState, targetCommentID: string, targetRe
         return state;
     }
     const newState = createState(state);
-    newState.post!.comments = updateArrayConditionally(
-        newState.post!.comments,
+    newState.post!.replies = updateArrayConditionally(
+        newState.post!.replies,
         val => val.id,
         targetCommentID,
         old => {
@@ -91,12 +91,12 @@ export function addReplyToComment(state: IState, commentID: string, reply: IComm
         return state;
     }
     const newState = createState(state);
-    for (const comment of state.post.comments) {
+    for (const comment of state.post.replies) {
         if (comment.id === commentID) {
             const newComment: IComment = {...comment, replies: [...comment.replies, reply]};
-            newState.post!.comments.push(newComment);
+            newState.post!.replies.push(newComment);
         } else {
-            newState.post!.comments.push(comment);
+            newState.post!.replies.push(comment);
         }
     }
     return newState;
@@ -107,12 +107,12 @@ export function addCommentToPost(state: IState, comment: IComment | IComment[]):
         return state;
     }
     const newState = createState(state);
-    const newComments = [...state.post.comments];
+    const newComments = [...state.post.replies];
     if (!Array.isArray(comment)) {
         comment = [comment];
     }
     newComments.push(...comment);
-    newState.post!.comments = newComments;
+    newState.post!.replies = newComments;
     return newState;
 }
 

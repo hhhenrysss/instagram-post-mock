@@ -1,7 +1,7 @@
 import {IComment} from '../../types/Comment';
 import {ActionTypes, IAction} from '../actionTypes';
 import {dataSource, DataSource} from '../../data-source/dataSource';
-import {Thunk} from '../thunkType';
+import {Thunk} from '../thunkTypes';
 
 export interface IReplyPostActionPayload {
     comment: IComment,

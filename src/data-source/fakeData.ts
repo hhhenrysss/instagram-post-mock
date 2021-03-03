@@ -26,15 +26,18 @@ for (const i of ids) {
 
 // todo: this data structure does not accommodate for hashtags
 export const currentPost: IPost = {
-    comments: currentComments,
-    postContent: 'Donec lobortis sit amet elit id congue. Fusce tempor, ante in pulvinar consequat, orci lorem condimentum diam, vel laoreet dui orci vel est. Ut malesuada felis vitae velit ornare tincidunt.',
-    postID: '',
+    replies: currentComments,
+    content: 'Donec lobortis sit amet elit id congue. Fusce tempor, ante in pulvinar consequat, orci lorem condimentum diam, vel laoreet dui orci vel est. Ut malesuada felis vitae velit ornare tincidunt.',
+    id: 'post1',
     totalCommentsSize: 0,
     location: 'Lorem ipsum dolor sit amet, consectetur',
     user: {
         username: 'Lorem ipsum',
         pictureURL: '/profile_pics/1.jpg'
-    }
+    },
+    imageURL: '/pics/post_pic.jpg',
+    timeSincePosted: 1234567890,
+    likes: new Set<string>()
 };
 
 export const currentUser: IProfile = {

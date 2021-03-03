@@ -1,7 +1,7 @@
 import {IPost} from '../../types/Post';
 import {ActionTypes, IAction} from '../actionTypes';
 import {dataSource} from '../../data-source/dataSource';
-import {Thunk} from '../thunkType';
+import {Thunk} from '../thunkTypes';
 
 export interface IFetchPostActionPayload {
     post: IPost

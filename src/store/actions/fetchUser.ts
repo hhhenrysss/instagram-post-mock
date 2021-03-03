@@ -1,7 +1,7 @@
 import {IProfile} from '../../types/Profile';
 import {ActionTypes, IAction} from '../actionTypes';
 import {dataSource} from '../../data-source/dataSource';
-import {Thunk} from '../thunkType';
+import {Thunk} from '../thunkTypes';
 
 export interface IFetchUserActionPayload {
     user: IProfile
